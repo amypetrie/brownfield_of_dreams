@@ -8,6 +8,13 @@
     <li> <%= current_user.email%> </li>
   </ul>
   <section>
+    <h1>Github</h1>
+    <ul>
+      <%@facade.user_repos.each do |repo| %>
+        <li class="github_repo"><%= repo.name %></li>
+      <%end%>
+  </section>
+  <section>
     <h1>Bookmarked Segments</h1>
   </section>
 </section>
