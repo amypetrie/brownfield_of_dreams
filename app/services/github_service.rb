@@ -8,6 +8,10 @@ class GithubService
     get_json("https://api.github.com/user/repos")
   end
 
+  def followers
+    get_json("https://api.github.com/user/followers")
+  end
+
   private
 
   def get_json(url)

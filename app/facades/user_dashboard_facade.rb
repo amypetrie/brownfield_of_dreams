@@ -6,20 +6,26 @@ class UserDashboardFacade
   end
 
   def user_repos(count)
-    search_result[0...count].map do |repo_data|
+    repo_search_result[0...count].map do |repo_data|
       GithubRepo.new(repo_data)
     end
   end
 
-  def user_name
-    # user.name
+  def followers(count)
+    # follower_search_result[0...count].map do |follower_data|
+    #   Follower.new(follower_data)
+    # end
   end
 
 private
   attr_reader :user
 
-  def search_result
-    @_search_result ||= service.repos
+  def repo_search_result
+    @repo_search_result ||= service.repos
+  end
+
+  def follower_search_result
+    @follower_search_result ||= service.followers
   end
 
   def service
