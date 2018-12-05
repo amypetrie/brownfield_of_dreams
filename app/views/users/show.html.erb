@@ -10,4 +10,14 @@
   <section>
     <h1>Bookmarked Segments</h1>
   </section>
+
+  <section>
+    <h1>Github</h1>
+    <ul class="github_repos_list">
+      <% @dashboard_facade.search_result.first(5).each do |repo| %>
+        <li class="github_repo">
+          <%= link_to repo.name, repo.url, target: '_blank' %>
+        </li>
+      <% end %>
+    </ul>
 </section>
