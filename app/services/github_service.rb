@@ -18,7 +18,8 @@ class GithubService
 
   def conn
     Faraday.new(:url => 'https://api.github.com') do |faraday|
-      faraday.headers["Authorization"] = ENV["github_user_token"]
+      # faraday.headers["Authorization"] = ENV["github_user_token"]
+      faraday.headers["Authorization"] = "token #{@filter[:access_key]}"
       faraday.adapter  Faraday.default_adapter
     end
   end

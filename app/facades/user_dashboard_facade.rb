@@ -1,11 +1,11 @@
 class UserDashboardFacade
 
-  def initialize(token)
-    @token = token
+  def initialize(github_token)
+    @github_token = github_token
   end
 
-  def user_repos
-    search_result.map do |repo_data|
+  def user_repos(count)
+    search_result[0...count].map do |repo_data|
       GithubRepo.new(repo_data)
     end
   end
@@ -17,7 +17,7 @@ private
   end
 
   def service
-    GithubService.new({access_key: @access_key})
+    GithubService.new({access_key: @github_token})
   end
 
 end
