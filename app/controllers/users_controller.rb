@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   def show
+    key = current_user.token
+    @facade = UserDashboardFacade.new(key)
   end
 
   def new
