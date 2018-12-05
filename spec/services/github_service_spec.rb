@@ -13,6 +13,7 @@ describe GithubService do
         VCR.use_cassette("github_service_spec") do
           service = GithubService.new({access_key: ENV["github_user_token"]})
 
+
           expect(service.repos).to be_a(Array)
           expect(service.repos.first).to have_key(:html_url)
           expect(service.repos.first).to have_key(:name)
