@@ -12,10 +12,14 @@ class UserDashboardFacade
   end
 
   def followers(count)
-    if follower_search_result.first[:login] != nil
       follower_search_result[0...count].map do |follower_data|
         Follower.new(follower_data)
-      end
+    end
+  end
+
+  def following
+    following_search_result.map do |follow_data|
+      Follow.new(follow_data)
     end
   end
 
@@ -28,6 +32,10 @@ private
 
   def follower_search_result
     @follower_search_result ||= service.followers
+  end
+
+  def following_search_result
+    @following_search_result ||= service.following
   end
 
   def service
