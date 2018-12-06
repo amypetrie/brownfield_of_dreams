@@ -74,13 +74,14 @@ describe "A registered user" do
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     visit dashboard_path
-    save_and_open_page
+    
 
     expect(page).to have_css(".follower", count: 5)
 
     # And under that section I should see a list of 5 repositories
     within(first(".follower")) do
-      expect(page).to have_link("lnchambers") #put in actual data
+      expect(page).to have_link("averimj")
+   #put in actual data
     # with the name of each Repo linking to the repo on Github
     end
   end

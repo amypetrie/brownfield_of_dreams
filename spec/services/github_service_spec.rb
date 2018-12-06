@@ -9,14 +9,25 @@ describe GithubService do
 
   context "instance methods" do
     context "#repos" do
-      it "returns a hash" do
-        VCR.use_cassette("github_service_spec") do
+      it "returns an array of repo hashes" do
+        VCR.use_cassette("github_service_repo_spec") do
           service = GithubService.new({access_key: ENV["github_user_token"]})
-
 
           expect(service.repos).to be_a(Array)
           expect(service.repos.first).to have_key(:html_url)
           expect(service.repos.first).to have_key(:name)
+        end
+      end
+    end
+
+    context "#followers" do
+      it "returns an array of follower hashes" do
+        VCR.use_cassette("github_service_followers_spec") do
+          service = GithubService.new({access_key: ENV["github_user_token"]})
+
+          expect(service.followers).to be_a(Array)
+          expect(service.followers.first).to have_key(:login)
+          expect(service.followers.first).to have_key(:html_url)
         end
       end
     end
