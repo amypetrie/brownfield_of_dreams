@@ -12,6 +12,10 @@ class GithubService
     get_json("https://api.github.com/user/followers")
   end
 
+  def following
+    get_json("https://api.github.com/user/following")
+  end
+
   private
 
   def get_json(url)

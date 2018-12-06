@@ -31,5 +31,17 @@ describe GithubService do
         end
       end
     end
+
+    context "#following" do
+      it "returns an array of users who are followed hashes" do
+        VCR.use_cassette("github_service_following_spec") do
+          service = GithubService.new({access_key: ENV["github_user_token"]})
+
+          expect(service.following).to be_a(Array)
+          expect(service.following.first).to have_key(:login)
+          expect(service.following.first).to have_key(:html_url)
+        end
+      end
+    end
   end
 end

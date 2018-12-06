@@ -15,6 +15,7 @@
 
 <% if current_user.token != nil %>
   <section>
+
     <h1>Github</h1>
     <ul><b>Repos<b>
       <%@facade.user_repos(5).each do |repo| %>
@@ -27,6 +28,13 @@
         <li class="follower"><%= link_to "#{follower.name}", follower.url %></li>
       <%end%>
     </ul>
+
+    <ul><b>Following<b>
+      <%@facade.following.each do |follow| %>
+        <li class="following"><%= link_to "#{follow.name}", follow.url %></li>
+      <%end%>
+    <ul>
+
   </section>
   <%end%>
 

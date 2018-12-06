@@ -45,6 +45,9 @@ describe "A registered user" do
           with(headers: {"Authorization" => "token #{user_1.token}"}).
             to_return(body: File.read("./spec/fixtures/followers.json"))
 
+            stub_request(:get, "https://api.github.com/user/following").
+              with(headers: {"Authorization" => "token #{user_1.token}"}).
+                to_return(body: File.read("./spec/fixtures/user_following.json"))
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
@@ -55,8 +58,6 @@ describe "A registered user" do
 
   # I should see another section titled "Followers"
   it 'should see a section titled Followers' do
-    stub_request(:get, "https://api.github.com/user/repos").
-        to_return(body: File.read("./spec/fixtures/user_repos.json"))
 
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -68,13 +69,10 @@ describe "A registered user" do
 
   # And I should see list of all followers with their handles linking to their Github profile
   it 'should see a list of followers with handles linking to github profiles' do
-    stub_request(:get, "https://api.github.com/user/repos").
-      to_return(body: File.read("./spec/fixtures/user_repos.json"))
-
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     visit dashboard_path
-    
+
 
     expect(page).to have_css(".follower", count: 5)
 
@@ -85,5 +83,36 @@ describe "A registered user" do
     # with the name of each Repo linking to the repo on Github
     end
   end
+
+  # And under that section I should see another section titled "Following"
+  it 'should see a section titled Following' do
+    stub_request(:get, "https://api.github.com/user/following").
+        to_return(body: File.read("./spec/fixtures/user_following.json"))
+
+    user = create(:user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit dashboard_path
+
+    expect(page).to have_content("Following")
+  end
+
+# And I should see list of users I follow with their handles linking to their Github profile
+  it 'should see a list of people user is following with handles linking to github profiles' do
+    stub_request(:get, "https://api.github.com/user/following").
+        to_return(body: File.read("./spec/fixtures/user_following.json"))
+
+    user = create(:user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    visit dashboard_path
+    save_and_open_page
+
+    expect(page).to have_css(".following", count: 1)
+
+    within(first(".following")) do
+      expect(page).to have_link("lnchambers")
+    end
+  end
+
 
 end
