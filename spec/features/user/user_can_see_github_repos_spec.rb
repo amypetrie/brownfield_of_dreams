@@ -41,11 +41,14 @@ describe "A registered user" do
       with(headers: {"Authorization" => "token #{user_1.token}"}).
         to_return(body: File.read("./spec/fixtures/user_repos_2.json"))
 
+        stub_request(:get, "https://api.github.com/user/followers").
+          with(headers: {"Authorization" => "token #{user_1.token}"}).
+            to_return(body: File.read("./spec/fixtures/followers.json"))
+
+
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
     visit dashboard_path
-
-    save_and_open_page
 
     expect(page).to have_content("museo")
   end
@@ -57,6 +60,7 @@ describe "A registered user" do
 
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
     visit dashboard_path
 
     expect(page).to have_content("Followers")
@@ -65,10 +69,20 @@ describe "A registered user" do
   # And I should see list of all followers with their handles linking to their Github profile
   it 'should see a list of followers with handles linking to github profiles' do
     stub_request(:get, "https://api.github.com/user/repos").
-        to_return(body: File.read("./spec/fixtures/user_repos.json"))
+      to_return(body: File.read("./spec/fixtures/user_repos.json"))
 
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    visit dashboard_path
+    save_and_open_page
+
+    expect(page).to have_css(".follower", count: 5)
+
+    # And under that section I should see a list of 5 repositories
+    within(first(".follower")) do
+      expect(page).to have_link("lnchambers") #put in actual data
+    # with the name of each Repo linking to the repo on Github
+    end
   end
 
 end
