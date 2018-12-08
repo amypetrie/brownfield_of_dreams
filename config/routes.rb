@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/auth/github/callback', to: 'oauth_connector#update'
+  
   namespace :api do
     namespace :v1 do
       resources :tutorials, only:[:show, :index]
