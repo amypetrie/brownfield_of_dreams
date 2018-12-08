@@ -9,6 +9,12 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def update
+    data = request.env["omniauth.auth"]
+    current_user.update(token: data.credentials.token)
+    redirect_to dashboard_path
+  end
+
   def create
     user = User.create(user_params)
     if user.save

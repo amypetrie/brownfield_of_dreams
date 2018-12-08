@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   root 'welcome#index'
   get 'tags/:tag', to: 'welcome#index', as: :tag
   get '/register', to: 'users#new'
+  # get '/github_auth', to: redirect("/auth/github"), as: 'github_auth'
+  get '/auth/github/callback', to: 'users#update'
+  get '/auth/failure', to: redirect('/')
 
   namespace :admin do
     get "/dashboard", to: "dashboard#show"
