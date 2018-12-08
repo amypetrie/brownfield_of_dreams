@@ -13,7 +13,7 @@
   </section>
 
 <% if current_user.token == nil %>
-  <%= link_to "Connect to OAuth", '/auth/github' %>
+  <%= link_to "Connect to OAuth", github_auth %>
 
 <% else %>
   <section>
