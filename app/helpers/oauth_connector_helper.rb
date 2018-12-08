@@ -1,0 +1,2 @@
+module OauthConnectorHelper
+end
