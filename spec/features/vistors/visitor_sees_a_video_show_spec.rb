@@ -26,7 +26,6 @@ describe 'visitor sees a video show' do
     save_and_open_page
 
     expect(current_path).to eq(tutorial_path(tutorial))
-    expect(page).to have_content(video.title)
-    expect(page).to have_content(tutorial.title)
+    expect(page).to have_content("No Videos Yet")
   end
 end
