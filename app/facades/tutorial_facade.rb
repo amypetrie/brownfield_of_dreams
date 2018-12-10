@@ -1,14 +1,16 @@
 class TutorialFacade < SimpleDelegator
-  def initialize(tutorial, video_id = nil)
+  def initialize(tutorial, video = nil)
     super(tutorial)
-    @video_id = video_id
+    @video = video
   end
 
   def current_video
-    if @video_id
-      videos.find(@video_id)
-    else
+    if @video
+      videos.find(@video.id)
+    elsif videos.length > 1
       videos.first
+    else
+      @current_video ||= Video.create
     end
   end
 
