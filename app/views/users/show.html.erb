@@ -27,13 +27,13 @@
 
     <ul><b>Followers<b>
       <%@facade.followers(5).each do |follower| %>
-        <li class="follower"><%= link_to "#{follower.name}", follower.url %></li>
+        <li class="follower"><%= link_to "#{follower.name}", follower.url %> <% if follower.user_exists %> | <%=link_to "Add as Friend"%><%end%></li>
       <%end%>
     </ul>
 
     <ul><b>Following<b>
       <%@facade.following.each do |follow| %>
-        <li class="following"><%= link_to "#{follow.name}", follow.url %></li>
+        <li class="following"><%= link_to "#{follow.name}", follow.url %> <% if follow.user_exists %> | <%=link_to "Add as Friend"%><%end%></li>
       <%end%>
     <ul>
 

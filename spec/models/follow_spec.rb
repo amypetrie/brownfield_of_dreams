@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Follow, type: :model do
-  follow = Follow.new({login: "Follow 1", html_url: "www.google.com"})
+  follow = Follow.new({login: "Follow 1", html_url: "www.google.com", uid: "1"})
 
   it "follow exists" do
     expect(follow).to be_a(Follow)
