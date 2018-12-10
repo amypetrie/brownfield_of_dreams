@@ -10,5 +10,5 @@ class Follow
   def user_exists
     true if User.find_by(uid: @uid)
   end
-  
+
 end

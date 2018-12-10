@@ -13,9 +13,9 @@
   </section>
 
 
-<% if current_user.token == nil %>
-  <%= link_to "Connect to GitHub", '/auth/github' %>
-<% else %>
+  <% if current_user.token == nil %>
+    <%= link_to "Connect to GitHub", '/auth/github' %>
+  <% else %>
   <section>
 
     <h1>Github</h1>
@@ -27,16 +27,25 @@
 
     <ul><b>Followers<b>
       <%@facade.followers(5).each do |follower| %>
-        <li class="follower"><%= link_to "#{follower.name}", follower.url %> <% if follower.user_exists %> | <%=link_to "Add as Friend"%><%end%></li>
+        <li class="follower"><%= link_to "#{follower.name}", follower.url %> <% if follower.user_exists %> | <%=link_to "Add as Friend", user_friendships_path(:friended_user => follower.uid, :user_id => current_user.id), :method => :post %><%end%></li>
       <%end%>
     </ul>
 
     <ul><b>Following<b>
       <%@facade.following.each do |follow| %>
-        <li class="following"><%= link_to "#{follow.name}", follow.url %> <% if follow.user_exists %> | <%=link_to "Add as Friend"%><%end%></li>
+        <li class="following"><%= link_to "#{follow.name}", follow.url %>
+          <% if follow.user_exists %>
+          | <%=link_to "Add as Friend", user_friendships_path(:friended_user => follow.uid, :user_id => current_user.id), :method => :post %>
+          <%end%>
+        </li>
       <%end%>
-    <ul>
+    </ul>
 
+    <ul><b>My Friends<b>
+      <%@facade.friends.each do |friend| %>
+        <li class="friends"><%= friend.first_name %></li>
+      <%end%>
+    </ul>
   </section>
   <%end%>
 

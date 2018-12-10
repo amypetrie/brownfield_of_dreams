@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get '/auth/github/callback', to: 'oauth_connector#update'
-  
+
   namespace :api do
     namespace :v1 do
       resources :tutorials, only:[:show, :index]
@@ -29,19 +29,20 @@ Rails.application.routes.draw do
   get '/login', to: "sessions#new"
   post '/login', to: "sessions#create"
   delete '/logout', to: "sessions#destroy"
-
   get '/dashboard', to: 'users#show'
   get '/about', to: 'about#show'
   get '/get_started', to: 'get_started#show'
-
   # Is this being used?
   get '/video', to: 'video#show'
 
-  resources :users, only: [:new, :create, :update, :edit]
+  resources :users, only: [:new, :create, :update, :edit] do
+    resources :friendships, only:[:create]
+  end
 
   resources :tutorials, only: [:show, :index] do
     resources :videos, only: [:show, :index]
   end
 
   resources :user_videos, only:[:create, :destroy]
+
 end

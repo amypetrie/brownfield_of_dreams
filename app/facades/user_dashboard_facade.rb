@@ -23,6 +23,10 @@ class UserDashboardFacade
     end
   end
 
+  def friends
+    @user.friended_users
+  end
+
 private
   attr_reader :user
 

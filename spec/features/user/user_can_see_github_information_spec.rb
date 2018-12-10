@@ -119,12 +119,53 @@ describe "A registered user" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     visit dashboard_path
-    save_and_open_page
 
     within(first(".follower")) do
       expect(page).to have_content("Add as Friend")
     end
   end
 
+  it 'should see Add Friend link if follow user exists in the DB' do
+    user = create(:user)
+    user_2 = create(:user, uid: "32661560")
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    visit dashboard_path
+
+    within(first(".following")) do
+      expect(page).to have_content("Add as Friend")
+    end
+  end
+
+  it 'clicks Add Friend to add friend' do
+    user = create(:user)
+    user_2 = create(:user, uid: "32661560")
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit dashboard_path
+
+    within(first(".following")) do
+      click_link("Add as Friend")
+      expect(current_path).to eq dashboard_path
+    end
+
+    expect(page).to have_content "Friend added!"
+  end
+
+  it 'sees added friends under My Friends' do
+    user = create(:user)
+    user_2 = create(:user, uid: "32661560")
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit dashboard_path
+
+    within(first(".following")) do
+      click_link("Add as Friend")
+    end
+    
+    expect(page).to have_content user_2.first_name
+  end
 
 end
