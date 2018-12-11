@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get '/auth/github/callback', to: 'oauth_connector#update'
+  resources :friendships, only: [:create, :destroy]
+
   
   namespace :api do
     namespace :v1 do
