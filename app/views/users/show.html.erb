@@ -27,7 +27,7 @@
 
     <ul><b>Followers<b>
       <%@facade.followers(5).each do |follower| %>
-        <li class="follower"><%= link_to "#{follower.name}", follower.url %></li>
+        <li class="follower"><%= link_to "#{follower.name}", follower.url %> <%=  link_to "Add As Friend", friendships_path(:friend_id => follower.uid), :method => :post %></li>
       <%end%>
     </ul>
 

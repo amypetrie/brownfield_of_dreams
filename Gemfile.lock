@@ -361,6 +361,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simplecov
+  sprockets-rails
   tzinfo-data
   vcr
   web-console (>= 3.3.0)
