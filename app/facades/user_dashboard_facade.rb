@@ -23,6 +23,11 @@ class UserDashboardFacade
     end
   end
 
+  def videos
+    # NOTE: includes prevents additional SQL requests(N+1) when we access videos.first.tutorial
+    @videos ||= @user.videos.includes(:tutorial).order(:tutorial_id, :position)
+  end
+
 private
   attr_reader :user
 
