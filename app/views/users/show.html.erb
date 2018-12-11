@@ -25,21 +25,29 @@
       <%end%>
     </ul>
 
+  <div class="follower_section">
     <ul><b>Followers<b>
       <%@facade.followers(5).each do |follower| %>
-        <li class="follower"><%= link_to "#{follower.name}", follower.url %> <% if follower.user_exists %> | <%=link_to "Add as Friend", user_friendships_path(:friended_user => follower.uid, :user_id => current_user.id), :method => :post %><%end%></li>
-      <%end%>
-    </ul>
-
-    <ul><b>Following<b>
-      <%@facade.following.each do |follow| %>
-        <li class="following"><%= link_to "#{follow.name}", follow.url %>
-          <% if follow.user_exists %>
-          | <%=link_to "Add as Friend", user_friendships_path(:friended_user => follow.uid, :user_id => current_user.id), :method => :post %>
+        <li class="follower"><%= link_to "#{follower.name}", follower.url %>
+          <% if follower.user_exists %>
+            <%=button_to "Add as Friend", user_friendships_path(current_user), {:friend_uid => follower.uid} %>
           <%end%>
         </li>
       <%end%>
     </ul>
+  </div>
+
+  <div class="following_section">
+    <ul><b>Following<b>
+      <%@facade.followed_users.each do |followed_user| %>
+        <li class="followed_user"><%= link_to "#{followed_user.name}", followed_user.url %>
+          <% if followed_user.user_exists %>
+            <%=button_to "Add as Friend", user_friendships_path(current_user), {:friend_uid => followed_user.uid} %>
+          <%end%>
+        </li>
+      <%end%>
+    </ul>
+  </div>
 
     <ul><b>My Friends<b>
       <%@facade.friends.each do |friend| %>
@@ -47,6 +55,7 @@
       <%end%>
     </ul>
   </section>
+
   <%end%>
 
 </section>

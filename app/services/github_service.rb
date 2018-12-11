@@ -12,7 +12,7 @@ class GithubService
     get_json("https://api.github.com/user/followers")
   end
 
-  def following
+  def followed_users
     get_json("https://api.github.com/user/following")
   end
 

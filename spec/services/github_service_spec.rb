@@ -37,9 +37,9 @@ describe GithubService do
         VCR.use_cassette("github_service_following_spec") do
           service = GithubService.new({access_key: ENV["github_user_token"]})
 
-          expect(service.following).to be_a(Array)
-          expect(service.following.first).to have_key(:login)
-          expect(service.following.first).to have_key(:html_url)
+          expect(service.followed_users).to be_a(Array)
+          expect(service.followed_users.first).to have_key(:login)
+          expect(service.followed_users.first).to have_key(:html_url)
         end
       end
     end

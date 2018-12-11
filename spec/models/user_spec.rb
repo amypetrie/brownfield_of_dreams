@@ -5,6 +5,23 @@ RSpec.describe User, type: :model do
     it {should validate_presence_of(:email)}
     it {should validate_presence_of(:first_name)}
     it {should validate_presence_of(:password)}
+    it {should have_many(:friendships)}
+    it {should have_many(:friended_users)}
+    it {should have_many(:friends)}
+    it {should have_many(:friend_users)}
+  end
+
+  describe 'user friendships' do
+    it 'user can have many friends' do
+      user_1 = create(:user)
+      user_2 = create(:user)
+      user_3 = create(:user)
+
+      Friendship.create(user: user_1, friended_user_id: user_2.id)
+      Friendship.create(user: user_1, friended_user_id: user_3.id)
+
+      expect(user_1.friended_users).to eq [user_2, user_3]
+    end
   end
 
   describe 'roles' do

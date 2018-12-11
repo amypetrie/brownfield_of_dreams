@@ -106,9 +106,9 @@ describe "A registered user" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     visit dashboard_path
 
-    expect(page).to have_css(".following", count: 1)
+    expect(page).to have_css(".following_section", count: 1)
 
-    within(first(".following")) do
+    within(first(".followed_user")) do
       expect(page).to have_link("lnchambers")
     end
   end
@@ -121,7 +121,7 @@ describe "A registered user" do
     visit dashboard_path
 
     within(first(".follower")) do
-      expect(page).to have_content("Add as Friend")
+      expect(page).to have_button("Add as Friend")
     end
   end
 
@@ -132,8 +132,8 @@ describe "A registered user" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     visit dashboard_path
 
-    within(first(".following")) do
-      expect(page).to have_content("Add as Friend")
+    within(first(".followed_user")) do
+      expect(page).to have_button "Add as Friend"
     end
   end
 
@@ -145,8 +145,8 @@ describe "A registered user" do
 
     visit dashboard_path
 
-    within(first(".following")) do
-      click_link("Add as Friend")
+    within(first(".followed_user")) do
+      click_on("Add as Friend")
       expect(current_path).to eq dashboard_path
     end
 
@@ -154,18 +154,23 @@ describe "A registered user" do
   end
 
   it 'sees added friends under My Friends' do
-    user = create(:user)
-    user_2 = create(:user, uid: "32661560")
+    user_1 = create(:user, uid: "123", first_name: "Amy")
+    user_2 = create(:user, uid: "33760591", first_name: "Rachel")
+    user_3 = create(:user, uid: "32661560", first_name: "Abby")
 
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_1)
 
     visit dashboard_path
 
-    within(first(".following")) do
-      click_link("Add as Friend")
+    within(".following_section") do
+      click_on("Add as Friend")
     end
-    
-    expect(page).to have_content user_2.first_name
+
+    user_new = User.find(user_1.id)
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user_new)
+
+    expect(page).to have_content user_3.first_name
   end
 
 end
