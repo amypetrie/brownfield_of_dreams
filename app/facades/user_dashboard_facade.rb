@@ -22,7 +22,8 @@ class UserDashboardFacade
     end
   end
 
-  def friends
+  def user_friends
+    # binding.pry
     @user.friended_users
   end
 

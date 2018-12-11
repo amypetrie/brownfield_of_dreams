@@ -30,7 +30,7 @@
       <%@facade.followers(5).each do |follower| %>
         <li class="follower"><%= link_to "#{follower.name}", follower.url %>
           <% if follower.user_exists %>
-            <%=button_to "Add as Friend", user_friendships_path(current_user), {:friend_uid => follower.uid} %>
+            <%=button_to "Add as Friend", user_friendships_path(current_user, friend_uid: follower.uid), class: "btn btn-outline mb1 aqua" %>
           <%end%>
         </li>
       <%end%>
@@ -42,19 +42,21 @@
       <%@facade.followed_users.each do |followed_user| %>
         <li class="followed_user"><%= link_to "#{followed_user.name}", followed_user.url %>
           <% if followed_user.user_exists %>
-            <%=button_to "Add as Friend", user_friendships_path(current_user), {:friend_uid => followed_user.uid} %>
+            <%=button_to "Add as Friend", user_friendships_path(current_user, friend_uid: followed_user.uid), class: "btn btn-outline mb1 aqua" %>
           <%end%>
         </li>
       <%end%>
     </ul>
   </div>
 
+  <div class="friends_section">
     <ul><b>My Friends<b>
-      <%@facade.friends.each do |friend| %>
-        <li class="friends"><%= friend.first_name %></li>
+      <%@facade.user_friends.each do |friend| %>
+        <li class="friends"><%=friend.first_name%> <%=friend.last_name%></li>
       <%end%>
     </ul>
   </section>
+</div>
 
   <%end%>
 
