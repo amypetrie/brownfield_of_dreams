@@ -10,6 +10,27 @@
 
   <section>
     <h1>Bookmarked Segments</h1>
+    <% if @facade.videos.present? %>
+      <ul> 
+        <% tutorial = nil %>
+        <% @facade.videos.find_in_batches(batch_size: 5) do |batch| %>
+          <% batch.each do |video| %>
+            <li>
+              <% if tutorial != video.tutorial %>
+                <% tutorial = video.tutorial %>
+                <span class="tutorial"><%= link_to tutorial.title, tutorial_path(tutorial) %></span>
+                </li>
+                <li>
+              <% end %>
+              <span>*</span>
+              <%= link_to video.title, tutorial_path(tutorial, video_id: video.id), class: 'video_link' %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No bookmarks yet</p>
+    <% end %>
   </section>
 
 
@@ -27,7 +48,7 @@
 
     <ul><b>Followers<b>
       <%@facade.followers(5).each do |follower| %>
-        <li class="follower"><%= link_to "#{follower.name}", follower.url %> <%=  link_to "Add As Friend", friendships_path(:friend_id => follower.uid), :method => :post %></li>
+        <li class="follower"><%= link_to "#{follower.name}", follower.url %></li>
       <%end%>
     </ul>
 
