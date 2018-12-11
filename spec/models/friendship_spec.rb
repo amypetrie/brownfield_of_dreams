@@ -7,12 +7,12 @@ RSpec.describe Friendship, type: :model do
   end
 
   it 'exists' do
-      user_1 = create(:user)
-      user_2 = create(:user)
+    user_1 = create(:user)
+    user_2 = create(:user)
 
-      friendship = Friendship.new(user: user_1, friended_user_id: user_2.id)
+    friendship = Friendship.new(user: user_1, friended_user_id: user_2.id)
 
-      expect(friendship).to be_a Friendship
+    expect(friendship).to be_a Friendship
   end
 
 end

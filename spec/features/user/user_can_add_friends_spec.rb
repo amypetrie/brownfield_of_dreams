@@ -89,4 +89,19 @@ describe "A registered user" do
 
     expect(page).to have_content(user_2.first_name)
   end
+
+  it 'cannot add a friend with invalid id' do
+    user = create(:user)
+    user_2 = create(:user, uid: "33760591")
+
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    visit dashboard_path
+
+    user_2.delete
+
+    click_button "Add as Friend"
+
+    expect(page).to have_content "Friend unable to be added!"
+  end
+
 end

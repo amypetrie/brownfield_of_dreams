@@ -12,7 +12,7 @@ RSpec.describe User, type: :model do
   end
 
   describe 'user friendships' do
-    it 'user can have many friends' do
+    it 'user can have many friended users' do
       user_1 = create(:user)
       user_2 = create(:user)
       user_3 = create(:user)
@@ -21,6 +21,18 @@ RSpec.describe User, type: :model do
       Friendship.create(user: user_1, friended_user_id: user_3.id)
 
       expect(user_1.friended_users).to eq [user_2, user_3]
+    end
+
+    it 'user can have many friends' do
+      user_1 = create(:user)
+      user_2 = create(:user)
+      user_3 = create(:user)
+
+      Friendship.create(user: user_2, friended_user_id: user_1.id)
+      Friendship.create(user: user_3, friended_user_id: user_1.id)
+
+      expect(user_1.friend_users).to eq [user_2, user_3]
+      expect(user_2.friended_users).to eq [user_1]
     end
   end
 
