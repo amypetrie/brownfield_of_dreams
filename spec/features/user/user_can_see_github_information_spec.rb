@@ -105,14 +105,12 @@ describe "A registered user" do
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
     visit dashboard_path
-    save_and_open_page
 
-    expect(page).to have_css(".following", count: 1)
+    expect(page).to have_css(".following_section", count: 1)
 
-    within(first(".following")) do
+    within(first(".followed_user")) do
       expect(page).to have_link("lnchambers")
     end
   end
-
 
 end

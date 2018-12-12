@@ -7,4 +7,12 @@ class Follower
     @uid = data[:id]
   end
 
+  def exists_in_database
+    true if existing_user
+  end
+
+  def existing_user
+    User.find_by(uid: @uid)
+  end
+
 end

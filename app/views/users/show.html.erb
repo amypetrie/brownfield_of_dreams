@@ -34,9 +34,9 @@
   </section>
 
 
-<% if current_user.token == nil %>
-  <%= link_to "Connect to GitHub", '/auth/github' %>
-<% else %>
+  <% if current_user.token == nil %>
+    <%= link_to "Connect to GitHub", '/auth/github' %>
+  <% else %>
   <section>
 
     <h1>Github</h1>
@@ -46,19 +46,39 @@
       <%end%>
     </ul>
 
+  <div class="follower_section">
     <ul><b>Followers<b>
       <%@facade.followers(5).each do |follower| %>
-        <li class="follower"><%= link_to "#{follower.name}", follower.url %></li>
+        <li class="follower"><%= link_to "#{follower.name}", follower.url %>
+          <% if follower.exists_in_database %>
+            <%=button_to "Add as Friend", user_friendships_path(current_user, friended_user: follower.existing_user), class: "btn btn-outline mb1 aqua" %>
+          <%end%>
+        </li>
       <%end%>
     </ul>
+  </div>
 
+  <div class="following_section">
     <ul><b>Following<b>
-      <%@facade.following.each do |follow| %>
-        <li class="following"><%= link_to "#{follow.name}", follow.url %></li>
+      <%@facade.followed_users.each do |followed_user| %>
+        <li class="followed_user"><%= link_to "#{followed_user.name}", followed_user.url %>
+          <% if followed_user.exists_in_database %>
+            <%=button_to "Add as Friend", user_friendships_path(current_user, friended_user: followed_user.existing_user), class: "btn btn-outline mb1 aqua" %>
+          <%end%>
+        </li>
       <%end%>
-    <ul>
+    </ul>
+  </div>
 
+  <div class="friends_section">
+    <ul><b>My Friends<b>
+      <%@facade.user_friends.each do |friend| %>
+        <li class="friends"><%=friend.first_name%> <%=friend.last_name%></li>
+      <%end%>
+    </ul>
   </section>
+</div>
+
   <%end%>
 
 </section>

@@ -1,7 +1,6 @@
 class UserDashboardFacade
 
   def initialize(user) #change this to take in user
-    # @github_token = github_token
     @user = user
   end
 
@@ -17,10 +16,14 @@ class UserDashboardFacade
     end
   end
 
-  def following
+  def followed_users
     following_search_result.map do |follow_data|
       Follow.new(follow_data)
     end
+  end
+
+  def user_friends
+    @user.friended_users
   end
 
   def videos
@@ -40,7 +43,7 @@ private
   end
 
   def following_search_result
-    @following_search_result ||= service.following
+    @following_search_result ||= service.followed_users
   end
 
   def service
