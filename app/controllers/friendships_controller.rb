@@ -4,10 +4,8 @@ class FriendshipsController < ApplicationController
   end
 
   def create
-    current_user = User.find(params[:user_id])
-    friend = User.find_by(uid: params[:friend_uid])
-    friendship = Friendship.create(user: current_user, friended_user: friend)
-    if friendship.save
+    @friendship = current_user.friendships.create(friended_user_id: friendship_params[:friended_user])
+    if @friendship.save
       flash[:notice] = "Friend added!"
       redirect_to dashboard_path
     else
@@ -18,8 +16,8 @@ class FriendshipsController < ApplicationController
 
 private
 
-  def user_params
-    params.permit(:uid, :first_name, :last_name)
+  def friendship_params
+    params.permit(:friended_user)
   end
 
 

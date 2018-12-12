@@ -29,8 +29,8 @@
     <ul><b>Followers<b>
       <%@facade.followers(5).each do |follower| %>
         <li class="follower"><%= link_to "#{follower.name}", follower.url %>
-          <% if follower.user_exists %>
-            <%=button_to "Add as Friend", user_friendships_path(current_user, friend_uid: follower.uid), class: "btn btn-outline mb1 aqua" %>
+          <% if follower.exists_in_database %>
+            <%=button_to "Add as Friend", user_friendships_path(current_user, friended_user: follower.existing_user), class: "btn btn-outline mb1 aqua" %>
           <%end%>
         </li>
       <%end%>
@@ -41,8 +41,8 @@
     <ul><b>Following<b>
       <%@facade.followed_users.each do |followed_user| %>
         <li class="followed_user"><%= link_to "#{followed_user.name}", followed_user.url %>
-          <% if followed_user.user_exists %>
-            <%=button_to "Add as Friend", user_friendships_path(current_user, friend_uid: followed_user.uid), class: "btn btn-outline mb1 aqua" %>
+          <% if followed_user.exists_in_database %>
+            <%=button_to "Add as Friend", user_friendships_path(current_user, friended_user: followed_user.existing_user), class: "btn btn-outline mb1 aqua" %>
           <%end%>
         </li>
       <%end%>

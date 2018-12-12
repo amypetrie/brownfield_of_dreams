@@ -7,8 +7,12 @@ class Follow
     @uid = data[:id]
   end
 
-  def user_exists
-    true if User.find_by(uid: @uid)
+  def exists_in_database
+    true if existing_user
+  end
+
+  def existing_user
+    User.find_by(uid: @uid)
   end
 
 end
