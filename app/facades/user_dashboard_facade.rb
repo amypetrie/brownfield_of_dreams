@@ -23,8 +23,12 @@ class UserDashboardFacade
   end
 
   def user_friends
-    # binding.pry
     @user.friended_users
+  end
+
+  def videos
+    # NOTE: includes prevents additional SQL requests(N+1) when we access videos.first.tutorial
+    @videos ||= @user.videos.includes(:tutorial).order(:tutorial_id, :position)
   end
 
 private

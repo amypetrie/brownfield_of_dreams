@@ -10,6 +10,27 @@
 
   <section>
     <h1>Bookmarked Segments</h1>
+    <% if @facade.videos.present? %>
+      <ul> 
+        <% tutorial = nil %>
+        <% @facade.videos.find_in_batches(batch_size: 5) do |batch| %>
+          <% batch.each do |video| %>
+            <li>
+              <% if tutorial != video.tutorial %>
+                <% tutorial = video.tutorial %>
+                <span class="tutorial"><%= link_to tutorial.title, tutorial_path(tutorial) %></span>
+                </li>
+                <li>
+              <% end %>
+              <span>*</span>
+              <%= link_to video.title, tutorial_path(tutorial, video_id: video.id), class: 'video_link' %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No bookmarks yet</p>
+    <% end %>
   </section>
 
 
