@@ -9,6 +9,6 @@ describe 'A registered user' do
     user = create(:user)
     visit dashboard_path
     click_on "Send an Invite"
-    expect(current_path)to eq new_invite_[path]
+    expect(current_path)to eq new_invite_path
   end
 end
