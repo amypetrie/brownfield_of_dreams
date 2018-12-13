@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 describe 'A registered user' do
-#   As a registered user
-# When I visit /dashboard
-# And I click "Send an Invite"
-# Then I should be on /invite
+
   it 'clicks Send an Invite to go the invite page' do
     user = create(:user)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
@@ -67,8 +64,6 @@ describe 'A registered user' do
 
     expect(current_path).to eq dashboard_path
     expect(page).to have_content "The Github user you selected doesn't have an email address associated with their account."
-
-    visit dashboard_path
 
   end
 

@@ -1,8 +1,8 @@
 class RegistrationMailer < ApplicationMailer
 
   def register(user)
-    @email = user.email
-    mail(to: @email, subject: "Register Now!")
+    @user = user
+    mail(to: @user.email, subject: "Register Now!")
   end
 
 end
