@@ -39,8 +39,30 @@ describe 'A registered user' do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
     visit new_invite_path
+    username = ('a'..'z').to_a.shuffle[0,25].join
 
-    fill_in "github_handle", with: ('a'..'z').to_a.shuffle[0,25].join
+    stub_request(:get, "https://api.github.com/users/#{username}").
+        to_return(body: File.read("./spec/fixtures/user_not_found.json"))
+
+    fill_in "github_handle", with: username
+    click_on "Send Invite"
+
+    expect(current_path).to eq dashboard_path
+    expect(page).to have_content "The Github user you selected doesn't have an email address associated with their account."
+  end
+
+  it 'gets an error message when a valid github handle is entered without associated email' do
+    user = create(:user)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+    visit new_invite_path
+
+    username = "amypetrie"
+
+    stub_request(:get, "https://api.github.com/users/#{username}").
+        to_return(body: File.read("./spec/fixtures/user_without_email.json"))
+
+    fill_in "github_handle", with: username
     click_on "Send Invite"
 
     expect(current_path).to eq dashboard_path

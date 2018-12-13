@@ -16,15 +16,14 @@ class GithubService
     get_json("https://api.github.com/user/following")
   end
 
-  def get_user_email
-    get_user_json("https://api.github.com/users/#{@filter[:github_handle]}")[:email]
+  def get_user
+    get_user_json("https://api.github.com/users/#{@filter[:github_handle]}")
   end
 
   private
 
   def get_user_json(url)
     response = open_conn.get(url)
-
     JSON.parse(response.body, symbolize_names: true)
   end
 
