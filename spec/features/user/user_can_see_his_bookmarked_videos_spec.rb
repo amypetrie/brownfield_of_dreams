@@ -12,8 +12,7 @@ describe "A registered user" do
     user = create(:user)
     user.videos << [video_1, video_2, video_3]
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    # As a logged in user
-    # When I visit my dashboard
+
     visit dashboard_path
 
     expect(page).to have_content("Bookmarked Segments")

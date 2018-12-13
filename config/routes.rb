@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'tags/:tag', to: 'welcome#index', as: :tag
   get '/register', to: 'users#new'
   get '/invite', to: 'invites#new'
-  post '/invite', to: 'invites#create'
+  post '/invite', to: 'invites#create', as: "new_invite"
 
   namespace :admin do
     get "/dashboard", to: "dashboard#show"
