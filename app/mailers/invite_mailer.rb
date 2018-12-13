@@ -1,9 +1,10 @@
 class InviteMailer < ApplicationMailer
 
-  def invite(user, contact)
+  def invite(user, recipient)
     @user = user
-    @contact = contact
-    mail(to: contact, subject: "Join our site!")
+    @email = recipient[:email]
+    @name = recipient[:name]
+    mail(to: @email, subject: "Join our site!")
   end
 
 end
