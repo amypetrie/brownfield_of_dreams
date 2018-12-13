@@ -67,6 +67,9 @@ describe 'A registered user' do
 
     expect(current_path).to eq dashboard_path
     expect(page).to have_content "The Github user you selected doesn't have an email address associated with their account."
+
+    visit dashboard_path
+
   end
 
 end

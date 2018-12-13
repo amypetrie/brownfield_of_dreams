@@ -23,7 +23,6 @@ describe 'visitor sees a video show' do
     visit '/'
 
     click_on tutorial.title
-    save_and_open_page
 
     expect(current_path).to eq(tutorial_path(tutorial))
     expect(page).to have_content("No Videos Yet")
