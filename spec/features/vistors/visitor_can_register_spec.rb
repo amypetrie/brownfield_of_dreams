@@ -61,7 +61,17 @@ describe 'vister can create an account', :js do
 
     click_on 'Create Account'
 
-    
+    user = User.find_by(email: email)
+    expect(user.active).to eq false
+
+    visit activate_path(user_id: user.id)
+
+    user = User.find_by(email: email)
+    expect(page).to have_content "Thank you! Your account is now activated."
+    expect(user.active).to eq true
+
+    visit dashboard_path(user)
+    expect(page).to have_content "Status: Active"
   end
 #   As a non-activated user
 # When I check my email for the registration email
