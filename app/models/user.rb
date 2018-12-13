@@ -19,4 +19,12 @@ class User < ApplicationRecord
   enum role: [:default, :admin]
   has_secure_password
 
+  def status
+    if active?
+      "Active"
+    else
+      "Inactive"
+    end
+  end
+
 end

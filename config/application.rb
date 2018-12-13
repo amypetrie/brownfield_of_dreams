@@ -17,6 +17,7 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+
 module PersonalProject
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -32,5 +33,7 @@ module PersonalProject
     config.middleware.use OmniAuth::Builder do
       provider :github, ENV['github_client_id'], ENV['github_client_secret'], scope: 'user,repo'
     end
+
+    config.action_mailer.default_url_options = { :host => "polar-beach-40345.herokuapp.com" }
   end
 end
