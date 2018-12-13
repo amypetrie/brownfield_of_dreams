@@ -55,10 +55,32 @@ describe "A visitor" do
     })
 
     visit "/"
-    save_and_open_page
 
     expect(page).to_not have_content("Back End Engineering - Prework")
     expect(page).to_not have_content("Back End Engineering - Module 1")
     expect(page).to have_content("Back End Engineering - Module 3")
+  end
+
+  it "cannot visit a classroom tutorial show page if not logged in" do
+    prework_tutorial_data = {
+      "title"=>"Back End Engineering - Prework",
+      "description"=>"Videos for prework.",
+      "thumbnail"=>"https://i.ytimg.com/vi/qMkRHW9zE1c/hqdefault.jpg",
+      "playlist_id"=>"PL1Y67f0xPzdN6C-LPuTQ5yzlBoz2joWa5",
+      "classroom"=>true,
+    }
+
+    prework_tutorial = Tutorial.create! prework_tutorial_data
+
+    prework_tutorial.videos.create!({
+      "title"=>"Prework - Environment Setup",
+      "description"=> Faker::Hipster.paragraph(2, true),
+      "video_id"=>"qMkRHW9zE1c",
+      "thumbnail"=>"https://i.ytimg.com/vi/qMkRHW9zE1c/hqdefault.jpg",
+    "position"=>1 })
+
+    visit tutorial_path(prework_tutorial)
+
+    expect(page).to have_content "The page you were looking for doesn't exist."
   end
 end

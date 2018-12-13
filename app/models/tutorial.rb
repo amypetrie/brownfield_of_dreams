@@ -6,5 +6,9 @@ class Tutorial < ApplicationRecord
   def self.public_tutorials
     Tutorial.where(classroom: false)
   end
-  
+
+  def public_tutorial
+    true if self.classroom == false
+  end
+
 end
