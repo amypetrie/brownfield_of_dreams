@@ -16,7 +16,7 @@ class InvitesController < ApplicationController
   end
 
   def service_params
-    params.permit(:github_handle)
+    params.permit(:github_handle, :authenticity_token)
   end
 
 end
