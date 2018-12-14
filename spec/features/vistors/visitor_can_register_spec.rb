@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe 'vister can create an account', :js do
-  it ' visits the home page' do
+
+  it ' visits the home page and registers as a enw user' do
     email = 'jimbob@aol.com'
     first_name = 'Jim'
     last_name = 'Bob'
@@ -73,12 +74,5 @@ describe 'vister can create an account', :js do
     visit dashboard_path(user)
     expect(page).to have_content "Status: Active"
   end
-#   As a non-activated user
-# When I check my email for the registration email
-# I should see a message that says "Visit here to activate your account."
-# And when I click on that link
-# Then I should be taken to a page that says "Thank you! Your account is now activated."
-#
-# And when I visit "/dashboard"
-# Then I should see "Status: Active"
+
 end
